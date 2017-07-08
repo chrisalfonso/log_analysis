@@ -1,6 +1,8 @@
 # log_analysis
 Analyzes database to report top articles, top authors, and frequency of HTTP errors.
 
+## Python files
+
 * __top_articles.py__
 
    Gets top 3 most popular articles, based on views
@@ -22,7 +24,15 @@ Analyzes database to report top articles, top authors, and frequency of HTTP err
    * 'daily_requests'
    * 'daily_errors_pct'
 
-* __newsdata.sql__ 
+## Database views
 
-  Tables: articles, authors, log
-  Views: article_views, daily_errors, daily_errors_pct, daily_requests
+* __article_views__
+
+  
+
+* __daily_errors__
+
+* __daily_errors_pct__
+
+* __daily_requests__
+
