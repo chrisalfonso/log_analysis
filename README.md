@@ -27,8 +27,12 @@ Analyzes database to report top articles, top authors, and frequency of HTTP err
 ## Database views
 
 * __article_views__
-
   
+  CREATE VIEW article_views as
+  SELECT path, substring (path from 10) AS path_slug, count(*) AS views
+  FROM log
+  WHERE path like '%/article/%'
+  GROUP BY path;
 
 * __daily_errors__
 
