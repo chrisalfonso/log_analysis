@@ -14,7 +14,7 @@ for article in articles:
 
 db.close()
 
-'''Building up the quries:
+'''Building up the queries:
 
 # 1. Get top 3 articles from LOG table. I need to strip out part of the url and just get the slug.
 SELECT path, substring (path from 10) as short_slug, count(*) as views
@@ -39,12 +39,18 @@ JOIN articles on articles.slug = substring (log_views.path from 10)
 ORDER BY views desc
 LIMIT 3;
 
+# Use a view instead of subquery
+CREATE VIEW article_views as
+SELECT path, substring (path from 10) AS path_slug, count(*) AS views
+FROM log
+WHERE path like '%/article/%'
+GROUP BY path;
+
 # I've got a VIEW now, so I can fix up the above query:
 SELECT articles.title, views
 FROM article_views
 JOIN articles on article_views.path_slug = articles.slug
 ORDER BY views desc
 LIMIT 3;
-
 
 '''
