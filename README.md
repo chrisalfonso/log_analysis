@@ -24,4 +24,5 @@ Analyzes database to report top articles, top authors, and frequency of HTTP err
 
 * __newsdata.sql__ 
 
-  
+  Tables: articles, authors, log
+  Views: article_views, daily_errors, daily_errors_pct, daily_requests
