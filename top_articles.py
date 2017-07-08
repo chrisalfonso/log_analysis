@@ -4,7 +4,9 @@ DBNAME = "news"
 
 db = psycopg2.connect(database=DBNAME)
 cur = db.cursor()
-query = "SELECT articles.title, views FROM article_views JOIN articles on article_views.path_slug = articles.slug ORDER BY views desc LIMIT 3;"
+query = "SELECT articles.title, views FROM article_views \
+JOIN articles on article_views.path_slug = articles.slug \
+ORDER BY views desc LIMIT 3;"
 cur.execute(query)
 articles = cur.fetchall()
 
@@ -16,14 +18,16 @@ db.close()
 
 '''Building up the queries:
 
-# 1. Get top 3 articles from LOG table. I need to strip out part of the url and just get the slug.
+# 1. Get top 3 articles from LOG table. \
+     I need to strip out part of the url and just get the slug.
 SELECT path, substring (path from 10) as short_slug, count(*) as views
 FROM log
 WHERE path not like '/'
 GROUP BY path
 ORDER BY views desc limit 3;
 
-# 2. Get title of articles by joining ARTICLES and LOG tables matching on slug
+# 2. Get title of articles by joining ARTICLES and LOG \
+    tables and matching on slug
 SELECT articles.title, log.path
 FROM articles
 JOIN log on articles.slug = substring (log.path from 10) limit 3;
