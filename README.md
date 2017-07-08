@@ -62,3 +62,6 @@ Analyzes database to report top articles, top authors, and frequency of HTTP err
   FROM daily_requests JOIN daily_errors 
   ON daily_requests.date = daily_errors.date;
   ```
+## Sample output
+
+* __output.txt__
