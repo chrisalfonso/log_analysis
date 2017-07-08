@@ -29,7 +29,7 @@ Analyzes database to report top articles, top authors, and frequency of HTTP err
 * __article_views__
   
   ```
-  CREATE VIEW article_views as
+  CREATE VIEW article_views AS
   SELECT path, substring (path from 10) AS path_slug, count(*) AS views
   FROM log
   WHERE path like '%/article/%'
@@ -38,29 +38,31 @@ Analyzes database to report top articles, top authors, and frequency of HTTP err
 
 * __daily_errors__
 
-```
-SELECT date, count(*) as errors
-FROM (
+  ```
+  CREATE VIEW daily_errors AS
+  SELECT date, count(*) as errors
+  FROM (
 	SELECT time::date as date, status FROM log
 	WHERE status like '%404%') as t
-GROUP BY date
-ORDER BY errors desc;
-```
+  GROUP BY date
+  ORDER BY errors desc;
+  ```
 
 * __daily_requests__
 
-```
-SELECT time::date as date, count(*) as requests FROM log
-WHERE status not like '%404%'
-GROUP BY date
-ORDER BY requests desc;
-```
+  ```
+  CREATE VIEW daily_requests AS
+  SELECT time::date as date, count(*) as requests FROM log
+  WHERE status not like '%404%'
+  GROUP BY date
+  ORDER BY requests desc;
+  ```
 
 * __daily_errors_pct__
 
-```
-CREATE VIEW daily_errors_pct AS
-SELECT daily_requests.date, daily_errors.errors::decimal, daily_requests.requests::decimal, round(((daily_errors.errors::decimal / daily_requests.requests::decimal) * 100), 2) as pct
-FROM daily_requests JOIN daily_errors 
-ON daily_requests.date = daily_errors.date;
-```
+  ```
+  CREATE VIEW daily_errors_pct AS
+  SELECT daily_requests.date, daily_errors.errors::decimal, daily_requests.requests::decimal, round(((daily_errors.errors::decimal /   daily_requests.requests::decimal) * 100), 2) as pct
+  FROM daily_requests JOIN daily_errors 
+  ON daily_requests.date = daily_errors.date;
+  ```
