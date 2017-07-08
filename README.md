@@ -62,7 +62,7 @@ Analyzes database to report top articles, top authors, and frequency of HTTP err
 
   ```
   CREATE VIEW daily_errors_pct AS
-  SELECT daily_requests.date, daily_errors.errors::decimal, daily_requests.requests::decimal, round(((daily_errors.errors::decimal /   daily_requests.requests::decimal) * 100), 2) as pct
+  SELECT daily_requests.date, round(((daily_errors.errors::decimal / daily_requests.requests::decimal) * 100), 2) as pct
   FROM daily_requests JOIN daily_errors 
   ON daily_requests.date = daily_errors.date;
   ```
